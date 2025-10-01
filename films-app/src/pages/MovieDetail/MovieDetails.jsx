@@ -5,29 +5,6 @@ function MoviesDetailsPages()
  {
 
 
-const { id } = useParams()
-const [movie, setMovie] = useState(null)
-
-useEffect(() => {
-    const loadMovieDetails = async () => {
-        try {
-            const data = await fetchMovieDetails(id)
-            setMovie(data)
-        } catch (error) {
-            setError('Что-то тут не так...'); 
-        }
-    }
-
-    if (id) {
-        loadMovieDetails()
-    }
-}, [id])
-
-
-const navigate = useNavigate()
-const goBack = () => navigate(-1);
-<button onClick={goBack}>← Назад</button>
-
 return (
         <div className="container">
             <a href="#" className="back-button">← Back to Search</a>
