@@ -1,15 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
-import MoviesDetailsPages from "../pages/MovieDetail/MovieDetails";
-import SearchPage from "../pages/Search/SearchPage";
+import { createBrowserRouter } from "react-router-dom"
+import Search from "../pages/Search/Search"
+import MovieDetails from "../pages/MovieDetails/MovieDetails"
 
 export const router = createBrowserRouter([
-{
-    path:"/",
-    element: <SearchPage/>
-},
-{
-    path:"movie/:id",
-    element: <MoviesDetailsPages/>
-}
-
+    {
+        path: "/",
+        element: <Search />
+    },
+    {
+        path: "movie/:id",
+        element: <MovieDetails />
+    }
 ])

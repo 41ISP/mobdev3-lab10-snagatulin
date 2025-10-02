@@ -1,22 +1,29 @@
-import "../MovieCard/MovieCard.css"
+import { useNavigate } from "react-router-dom"
 
-const MovieCard = ({ movie, onClick, type}) => {
+const MovieCard = ({Poster, Type, imdbID, Year, Title}) => {
+    const navigate = useNavigate()
+    function handleclick(){
+        navigate(`movie/${imdbID}`)
+
+
+    }
     return (
-           <div class="movie-card">
-                <div class="poster-container">
-                    <img src={movie.Poster !== 'N/A' ? movie.Poster : defaultImage} />
+        <div onClick={handleclick} className="movie-card">
+            <div className="poster-container">
+                <img src={Poster} alt={Title}/>
+            </div>
+            <div className="movie-info">
+                <div className="movie-title">{Title}</div>
+                <div className="movie-meta">
+                    <span className="movie-year">{Year}</span>
+                    <span className="movie-type">{Type}</span>
                 </div>
-                <div class="movie-info">
-                        <div class="movie-title">{movie.Title}</div>
-                        <div class="movie-meta">
-                            <span class="movie-year">{movie.Year}</span>
-                            <span class="movie-type">{movie.type}</span>
-                        </div>
-                         <div class = "movie-id" onClick={() => onClick(movie.imdbID)}/>
-                    </div>
-                    </div>
-    )
+                <div className="movie-id">IMDb: {imdbID}</div>
+            </div>
+        </div>
 
+
+    )
 }
 
-export default MovieCard;
+export default MovieCard

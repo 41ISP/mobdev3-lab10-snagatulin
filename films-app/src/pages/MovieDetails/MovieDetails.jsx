@@ -1,13 +1,34 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import "./MovieDetails.css"
+import { useEffect, useState } from 'react'
 
 function MoviesDetailsPages()
  {
+   const[MovieDetails, SetMovieDetails] = useState(undefined)
+   const{id} = useParams()
+   useEffect(() => {
+    
+        const handleSearch = async () => {
+        try {
+            const parameters = new URLSearchParams({
+                apikey: import.meta.env.VITE_OMDB_APIKEY, i: id
+            })
+            const res = await fetch(`https://www.omdbapi.com/?${parameters.toString()}`)
+            const json = await res.json()
+            console.log(json);
+            SetMovieDetails(json);
+        } catch (err) {
 
+            console.error(err)
+        }
+    }
+handleSearch();
+
+}, [])
 
 return (
         <div className="container">
-            <a href="#" className="back-button">← Back to Search</a>
+            <Link to="/" className="back-button">← Back to Search</Link>
 
             <div className="movie-detail-card">
                 <div className="movie-header">
@@ -20,27 +41,27 @@ return (
                     </div>
 
                     <div className="info-section">
-                        <h1 className="movie-title">Joker</h1>
+                        <h1 className="movie-title">{MovieDetails.Title}</h1>
                         <div className="movie-tagline">
-                            <span className="tag">2019</span>
-                            <span className="tag rated">R</span>
-                            <span className="tag">122 min</span>
-                            <span className="tag">Crime, Drama, Thriller</span>
+                            <span className="tag">{MovieDetails.Year}</span>
+                            <span className="tag rated">{MovieDetails.Rated}</span>
+                            <span className="tag">{MovieDetails.Runtime}</span>
+                            <span className="tag">{MovieDetails.Genre}</span>
                         </div>
 
                         <div className="movie-meta">
                             <div className="meta-item">
                                 <span className="meta-label">Released:</span>
-                                <span className="meta-value">04 Oct 2019</span>
+                                <span className="meta-value">{MovieDetails.Released}</span>
                             </div>
                             <div className="meta-item">
                                 <span className="meta-label">Language:</span>
-                                <span className="meta-value">English, German</span>
+                                <span className="meta-value">{MovieDetails.Language}</span>
                             </div>
                             <div className="meta-item">
                                 <span className="meta-label">Country:</span>
                                 <span className="meta-value">
-                                    United States, Canada, Australia
+                                    {MovieDetails.Country}
                                 </span>
                             </div>
                             <div className="meta-item">
@@ -55,11 +76,7 @@ return (
                     <div className="section">
                         <h2 className="section-title">Plot Summary</h2>
                         <p className="plot-text">
-                            Arthur Fleck, a party clown and a failed stand-up
-                            comedian, leads an impoverished life with his ailing
-                            mother. However, when society shuns him and brands
-                            him as a freak, he decides to embrace the life of
-                            chaos in Gotham City.
+                            {MovieDetails.Plot}
                         </p>
                     </div>
 
@@ -69,19 +86,19 @@ return (
                             <div className="info-box">
                                 <div className="info-box-title">Director</div>
                                 <div className="info-box-content">
-                                    Todd Phillips
+                                    {MovieDetails.Director}
                                 </div>
                             </div>
                             <div className="info-box">
                                 <div className="info-box-title">Writer</div>
                                 <div className="info-box-content">
-                                    Todd Phillips, Scott Silver, Bob Kane
+                                    {MovieDetails.Writer}
                                 </div>
                             </div>
                             <div className="info-box">
                                 <div className="info-box-title">Actors</div>
                                 <div className="info-box-content">
-                                    Joaquin Phoenix, Robert De Niro, Zazie Beetz
+                                    {MovieDetails.Actors}
                                 </div>
                             </div>
                         </div>
