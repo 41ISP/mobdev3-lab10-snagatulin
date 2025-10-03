@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 function MoviesDetailsPages()
  {
-   const[MovieDetails, SetMovieDetails] = useState(undefined)
+   const[MovieDetails, SetMovieDetails] = useState(undefined);
    const{id} = useParams()
    useEffect(() => {
     
@@ -26,18 +26,21 @@ handleSearch();
 
 }, [])
 
-return (
+
+
+return(
         <div className="container">
             <Link to="/" className="back-button">← Back to Search</Link>
 
-            <div className="movie-detail-card">
+
+           {MovieDetails && <div className="movie-detail-card">
                 <div className="movie-header">
                     <div className="poster-section">
                         <img
-                            src="https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_SX300.jpg"
-                            alt="Joker"
+                            src={MovieDetails.Poster}
+                            alt={MovieDetails.Title}
                             className="poster-image" />
-                        <div className="rating-badge">⭐ 8.3</div>
+                        <div className="rating-badge">⭐{MovieDetails.imdbRating}</div>
                     </div>
 
                     <div className="info-section">
@@ -66,7 +69,7 @@ return (
                             </div>
                             <div className="meta-item">
                                 <span className="meta-label">IMDb ID:</span>
-                                <span className="meta-value">tt7286456</span>
+                                <span className="meta-value">{MovieDetails.imdbID}</span>
                             </div>
                         </div>
                     </div>
@@ -106,27 +109,19 @@ return (
 
                     <div className="section">
                         <h2 className="section-title">Ratings & Reviews</h2>
-                        <div className="ratings-container">
+                        <div className="ratings-container"> 
+                            {MovieDetails.Ratings.map((el) => (
                             <div className="rating-box">
-                                <div className="rating-source">
-                                    Internet Movie Database
-                                </div>
-                                <div className="rating-value">8.3/10</div>
-                            </div>
-                            <div className="rating-box">
-                                <div className="rating-source">Rotten Tomatoes</div>
-                                <div className="rating-value">68%</div>
-                            </div>
-                            <div className="rating-box">
-                                <div className="rating-source">Metacritic</div>
-                                <div className="rating-value">59/100</div>
-                            </div>
+                                <div className="rating-source">{el.Source}</div>
+                             <div className="rating-value">{el.Value}</div>
+                             </div>
+                            ))}
                         </div>
 
                         <div className="awards-box">
                             <div className="awards-icon">🏆</div>
                             <div className="awards-text">
-                                Won 2 Oscars. 120 wins & 246 nominations total
+                                {MovieDetails.Awards}
                             </div>
                         </div>
                     </div>
@@ -136,16 +131,17 @@ return (
                         <div className="box-office-section">
                             <div className="box-office-card">
                                 <div className="box-office-label">Box Office</div>
-                                <div className="box-office-value">$335.5M</div>
+                                <div className="box-office-value">{MovieDetails.BoxOffice}</div>
                             </div>
                             <div className="box-office-card">
                                 <div className="box-office-label">IMDb Votes</div>
-                                <div className="box-office-value">1,637,986</div>
+                                <div className="box-office-value">{MovieDetails.imdbVotes}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>             
+ }
         </div>
 )
 }
